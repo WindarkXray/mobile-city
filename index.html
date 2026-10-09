@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mobile City, réparation de téléphones à Ixelles</title>
+<meta name="description" content="Mobile City, atelier de réparation de téléphones chaussée d'Ixelles. Écrans, batteries, caméras, boutons et connecteurs, en réparation express.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bleu:#1D3BD6;
+    --bleu-2:#2F4FF0;
+    --rouge:#F0453A;
+    --glace:#F2F5FB;
+    --encre:#121A33;
+    --blanc:#FFFFFF;
+    --gris:#5A6380;
+    --wide:"Unbounded", "Arial Black", Arial, sans-serif;
+    --sans:"Manrope", "Helvetica Neue", Arial, sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--sans);color:var(--encre);background:var(--blanc);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--rouge);outline-offset:3px;border-radius:6px}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+  .top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 24px;max-width:1180px;margin:0 auto}
+  .logo{font-family:var(--wide);font-weight:700;font-size:20px;text-decoration:none;display:flex;align-items:center;gap:10px}
+  .logo i{width:14px;height:22px;border:3px solid var(--blanc);border-radius:4px;display:block;position:relative}
+  .logo i::after{content:"";position:absolute;left:50%;bottom:2px;width:4px;height:2px;margin-left:-2px;background:var(--rouge);border-radius:2px}
+  .top nav{display:flex;gap:24px;font-weight:500;font-size:15px}
+  .top nav a{text-decoration:none;opacity:.85}
+  .top nav a:hover{opacity:1}
+  .cta-top{background:var(--rouge);color:var(--blanc);text-decoration:none;font-weight:700;padding:10px 18px;border-radius:12px;white-space:nowrap}
+
+  /* Hero et téléphone interactif */
+  .hero{background:var(--bleu);color:var(--blanc);padding:40px 0 90px;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;background:
+    linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px) 0 0/40px 40px,
+    linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px) 0 0/40px 40px;pointer-events:none}
+  .hero-grid{position:relative;display:grid;grid-template-columns:1fr 580px;gap:48px;align-items:center}
+  .device{display:grid;grid-template-columns:260px 1fr;gap:28px;align-items:center}
+  .hero h1{font-family:var(--wide);font-weight:700;font-size:clamp(32px,3.6vw,52px);line-height:1.04;letter-spacing:-.02em}
+  .hero p.lead{margin-top:20px;font-size:18px;color:#D3DBFF;max-width:26em}
+  .stars{margin-top:24px;display:inline-flex;align-items:center;gap:12px;background:rgba(255,255,255,.1);border-radius:14px;padding:10px 14px;font-weight:500}
+  .stars b{font-family:var(--wide);font-size:22px}
+  .stars span.s{color:#FFD34D;letter-spacing:2px}
+  .actions{margin-top:28px;display:flex;flex-wrap:wrap;gap:12px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 22px;border-radius:14px;font-weight:700;text-decoration:none}
+  .btn-rouge{background:var(--rouge);color:var(--blanc)}
+  .btn-rouge:hover{background:#d93a30}
+  .btn-blanc{background:var(--blanc);color:var(--bleu)}
+
+  .phone{width:100%;max-width:300px;justify-self:center}
+  .phone svg{width:100%;height:auto;overflow:visible}
+  .hot{cursor:pointer}
+  .hot .ring{fill:var(--rouge);stroke:var(--blanc);stroke-width:3;transition:transform .2s ease;transform-box:fill-box;transform-origin:center}
+  .hot text{font-family:var(--sans);font-size:22px;font-weight:700;fill:var(--blanc);pointer-events:none}
+  .hot:hover .ring,.hot.on .ring{transform:scale(1.18)}
+  .hot.on .ring{fill:#FFD34D;stroke:var(--rouge)}
+  .hot.on text{fill:var(--encre)}
+  .hot:focus{outline:none}
+  .hot:focus-visible .ring{stroke:#FFD34D;stroke-width:5}
+  .pulse{fill:none;stroke:var(--rouge);stroke-width:2;opacity:0;animation:pulse 2.4s ease-out infinite;transform-box:fill-box;transform-origin:center}
+  @keyframes pulse{0%{opacity:.8;transform:scale(1)}100%{opacity:0;transform:scale(2.2)}}
+
+  .panel{background:var(--blanc);color:var(--encre);border-radius:20px;padding:24px;box-shadow:0 30px 60px -30px rgba(0,0,0,.5)}
+  .panel small{display:block;color:var(--gris);font-weight:500;font-size:14px}
+  .panel h3{font-family:var(--wide);font-size:22px;line-height:1.15;margin:6px 0 10px}
+  .panel p{font-size:15px;color:var(--gris)}
+  .panel ul{margin:14px 0 0;padding-left:18px;font-size:15px}
+  .panel li{margin-bottom:4px}
+  .panel .btn{margin-top:18px;width:100%}
+
+  /* Ce qu'on répare */
+  section{scroll-margin-top:90px}
+  h2{font-family:var(--wide);font-weight:700;font-size:clamp(28px,3.2vw,44px);line-height:1.08;letter-spacing:-.01em}
+  .repairs{padding:96px 0}
+  .r-head{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin-bottom:40px}
+  .r-head p{color:var(--gris);max-width:30em}
+  .r-list{display:grid;grid-template-columns:repeat(3,1fr);border-top:2px solid var(--encre)}
+  .r{padding:26px 24px 28px 0;border-bottom:1px solid #DDE2EE}
+  .r h3{font-family:var(--wide);font-size:18px;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+  .r h3 i{width:10px;height:10px;border-radius:3px;background:var(--rouge);display:block;flex:none}
+  .r p{color:var(--gris);font-size:16px;max-width:24em}
+
+  .accessoires{background:var(--glace);padding:90px 0}
+  .acc-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:48px;align-items:center}
+  .acc-grid p{margin-top:16px;color:var(--gris);max-width:28em}
+  .wall{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+  .case{aspect-ratio:1/1.9;border-radius:12px;position:relative;box-shadow:inset 0 0 0 2px rgba(0,0,0,.06)}
+  .case::before{content:"";position:absolute;top:8%;left:12%;width:30%;aspect-ratio:1;border-radius:8px;background:rgba(0,0,0,.18)}
+  .case:nth-child(6n+2){transform:translateY(16px)}
+  .case:nth-child(6n+4){transform:translateY(8px)}
+
+  .visit{padding:96px 0}
+  .v-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;margin-top:36px}
+  .card{border-radius:22px;padding:32px}
+  .card-a{background:var(--bleu);color:var(--blanc)}
+  .card-a .big{font-family:var(--wide);font-size:28px;line-height:1.2;margin-bottom:12px}
+  .card-a p{color:#D3DBFF;margin-bottom:22px}
+  .card-b{background:var(--glace)}
+  .card-b .big{font-family:var(--wide);font-size:28px;line-height:1.2;margin-bottom:12px}
+  .card-b p{color:var(--gris);margin-bottom:22px}
+
+
+  /* Pied de page */
+  footer{background:var(--encre);color:#A9B1C9;font-size:15px}
+  .f-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding:60px 0 44px}
+  .f-logo{font-weight:800;font-size:28px;color:#fff;text-decoration:none;display:flex;align-items:center;gap:10px;letter-spacing:-.01em}
+  .f-top p{margin-top:12px;max-width:22em}
+  .f-top h3{font-size:14px;font-weight:700;color:#fff;margin-bottom:12px}
+  .f-top ul{list-style:none;display:grid;gap:6px;padding:0}
+  .f-top a{text-decoration:none}
+  .f-top a:hover{color:#fff;text-decoration:underline;text-underline-offset:3px}
+  .f-bottom{border-top:1px solid rgba(255,255,255,.14);padding:20px 0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:13px;opacity:.8}
+  .ph{position:relative;overflow:hidden;border-radius:18px;margin:0}
+  .ph img{width:100%;height:100%;object-fit:cover;display:block;color:transparent}
+  .f-logo{font-family:var(--wide);font-size:22px}
+  .ph{background:#DCE2F2}
+  .shots{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;height:340px;margin-bottom:40px}
+
+  @media (max-width:1100px){
+    .hero-grid{grid-template-columns:1fr}
+    .device{max-width:600px}
+  }
+  @media (max-width:760px){
+    .top nav{display:none}
+    .device{grid-template-columns:1fr}
+    .phone{max-width:240px}
+    .r-head,.acc-grid,.v-grid{grid-template-columns:1fr}
+    .r-list{grid-template-columns:1fr}
+    .r{padding-right:0}
+    .shots{grid-template-columns:1fr;height:auto;grid-auto-rows:220px}
+    .wall{grid-template-columns:repeat(4,1fr)}
+    .case:nth-child(n+9){display:none}
+  }
+  @media (max-width:560px){
+    body{font-size:16px}
+    .wrap,.top{padding-left:16px;padding-right:16px}
+    .logo{font-size:17px}
+  }
+  @media (prefers-reduced-motion:reduce){.pulse{animation:none}.hot .ring{transition:none}}
+
+
+  /* Formulaire de devis */
+  .devis{background:var(--bleu);color:var(--blanc);padding:96px 0;position:relative;overflow:hidden}
+  .devis::before{content:"";position:absolute;inset:0;background:
+    linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px) 0 0/40px 40px,
+    linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px) 0 0/40px 40px;pointer-events:none}
+  .devis-grid{position:relative;display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:start}
+  .devis h2{color:var(--blanc)}
+  .devis-intro p{margin-top:16px;color:#D3DBFF;max-width:26em}
+  .devis-steps{list-style:none;margin-top:28px;display:grid;gap:14px;padding:0}
+  .devis-steps li{display:flex;gap:14px;align-items:flex-start;color:#E6EBFF}
+  .devis-steps b{flex:none;width:30px;height:30px;border-radius:50%;background:var(--rouge);display:grid;place-items:center;font-family:var(--wide);font-size:13px}
+  .form{background:var(--blanc);color:var(--encre);border-radius:22px;padding:30px;box-shadow:0 30px 60px -30px rgba(0,0,0,.5);display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .field{display:flex;flex-direction:column;gap:6px}
+  .field.full{grid-column:1 / -1}
+  .field label{font-weight:700;font-size:14px}
+  .field label span{font-weight:500;color:var(--gris)}
+  .field input,.field select,.field textarea{font:inherit;font-size:16px;color:var(--encre);background:var(--glace);border:2px solid transparent;border-radius:12px;padding:12px 14px;width:100%}
+  .field textarea{min-height:110px;resize:vertical}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--bleu);background:var(--blanc)}
+  .form button{grid-column:1 / -1;font:inherit;font-weight:700;font-size:17px;border:0;border-radius:14px;padding:16px;background:var(--rouge);color:var(--blanc);cursor:pointer}
+  .form button:hover{background:#d93a30}
+  .form button:disabled{opacity:.6;cursor:wait}
+  .form-msg{grid-column:1 / -1;font-weight:600;font-size:15px;min-height:1.4em;margin:0}
+  .form-msg.ok{color:#1E7A3C}
+  .form-msg.err{color:#C0271D}
+  .hp{position:absolute;left:-9999px}
+  @media (max-width:900px){.devis-grid{grid-template-columns:1fr;gap:32px}}
+  @media (max-width:560px){.form{grid-template-columns:1fr;padding:22px}.devis{padding:72px 0}}
+
+  /* ===== Pied de page centré ===== */
+  footer{text-align:center}
+  footer .f-top{grid-template-columns:repeat(3,minmax(0,1fr));justify-items:center;gap:36px 32px}
+  footer .f-top > div:first-child{grid-column:1 / -1;display:flex;flex-direction:column;align-items:center}
+  footer .f-top > div:first-child > a{justify-content:center}
+  footer .f-top p{margin-left:auto;margin-right:auto}
+  footer .f-top ul{justify-items:center}
+  footer .f-bottom{flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px}
+
+
+  /* ===== En-tête ===== */
+  :root{--hd-bg:rgba(29,59,214,.95);--hd-solid:#1D3BD6;--hd-fg:#FFFFFF;--hd-muted:rgba(255,255,255,.84);--hd-hover:rgba(255,255,255,.10);--hd-active:rgba(255,255,255,.18);--hd-cta:#F0453A;--hd-ctafg:#FFFFFF;--hd-line:rgba(255,255,255,.12);--hd-panel:#1830B8;--hd-panelfg:#FFFFFF;--hd-panelline:rgba(255,255,255,.14);--hd-call:#F0453A;--hd-callfg:#FFFFFF;--hd-h:72px}
+  section[id]{scroll-margin-top:calc(var(--hd-h) + 12px)}
+  .hd{position:sticky;top:0;z-index:40;background:var(--hd-solid);color:var(--hd-fg);border-bottom:1px solid var(--hd-line);transition:box-shadow .25s ease,background-color .25s ease}
+  @supports (backdrop-filter:blur(10px)){.hd{background:var(--hd-bg);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px)}}
+  .hd.is-scrolled{box-shadow:0 10px 30px -18px rgba(0,0,0,.45)}
+  .hd-in{max-width:1200px;margin:0 auto;padding:0 24px;height:var(--hd-h);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:20px;transition:height .25s ease}
+  .hd.is-scrolled .hd-in{height:60px}
+  .hd-logo{justify-self:start;display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--hd-fg);font-family:var(--wide);font-weight:700;font-size:19px;line-height:1;letter-spacing:-.01em;white-space:nowrap}
+  .hd-mark{width:28px;height:28px;flex:none}
+  .hd-nav{display:flex;align-items:center;gap:4px}
+  .hd-nav a{position:relative;text-decoration:none;color:var(--hd-muted);font-size:15px;font-weight:600;padding:9px 14px;border-radius:999px;transition:background-color .2s ease,color .2s ease;white-space:nowrap}
+  .hd-nav a:hover{color:var(--hd-fg);background:var(--hd-hover)}
+  .hd-nav a.is-active{color:var(--hd-fg);background:var(--hd-active)}
+  .hd-act{justify-self:end;display:flex;align-items:center;gap:8px}
+  .hd-cta{display:inline-flex;align-items:center;gap:8px;text-decoration:none;background:var(--hd-cta);color:var(--hd-ctafg);font-weight:700;font-size:15px;line-height:1;padding:12px 18px;border-radius:999px;white-space:nowrap;transition:transform .15s ease,filter .15s ease}
+  .hd-cta svg{width:16px;height:16px}
+  .hd-cta:hover{filter:brightness(1.08)}
+  .hd-cta:active{transform:scale(.97)}
+  .hd-icon{display:none;width:42px;height:42px;border-radius:50%;align-items:center;justify-content:center;border:0;cursor:pointer;flex:none;text-decoration:none}
+  .hd-icon svg{width:19px;height:19px}
+  .hd-call{background:var(--hd-call);color:var(--hd-callfg)}
+  .hd-burger{background:var(--hd-hover);color:var(--hd-fg)}
+  .hd-burger .bars{position:relative;display:block;width:18px;height:2px;background:currentColor;border-radius:2px;transition:background-color .2s}
+  .hd-burger .bars::before,.hd-burger .bars::after{content:"";position:absolute;left:0;width:18px;height:2px;background:currentColor;border-radius:2px;transition:transform .25s ease}
+  .hd-burger .bars::before{top:-6px}
+  .hd-burger .bars::after{top:6px}
+  .hd-burger[aria-expanded="true"] .bars{background:transparent}
+  .hd-burger[aria-expanded="true"] .bars::before{transform:translateY(6px) rotate(45deg)}
+  .hd-burger[aria-expanded="true"] .bars::after{transform:translateY(-6px) rotate(-45deg)}
+  .hd-panel{position:absolute;left:0;right:0;top:100%;background:var(--hd-panel);color:var(--hd-panelfg);padding:8px 20px 22px;box-shadow:0 30px 40px -24px rgba(0,0,0,.5);opacity:0;transform:translateY(-8px);pointer-events:none;visibility:hidden;transition:opacity .2s ease,transform .2s ease,visibility 0s linear .2s}
+  .hd-panel.is-open{opacity:1;transform:none;pointer-events:auto;visibility:visible;transition:opacity .2s ease,transform .2s ease}
+  .hd-panel a{display:flex;align-items:center;justify-content:space-between;padding:16px 4px;font-size:19px;font-weight:600;text-decoration:none;color:var(--hd-panelfg);border-bottom:1px solid var(--hd-panelline)}
+  .hd-panel a.is-active{color:var(--hd-panelfg);opacity:1}
+  .hd-panel a.is-active::after{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+  .hd-panel .hd-pbtn{margin-top:16px;border:0;justify-content:center;gap:10px;border-radius:14px;padding:15px;font-size:17px;font-weight:700;background:var(--hd-call);color:var(--hd-callfg)}
+  .hd-panel .hd-pbtn svg{width:18px;height:18px}
+  .hd-panel .hd-pbtn + .hd-pbtn{margin-top:10px;background:transparent;color:var(--hd-panelfg);box-shadow:inset 0 0 0 2px var(--hd-panelline)}
+  @media (max-width:960px){
+    .hd-in{grid-template-columns:1fr auto}
+    .hd-nav{display:none}
+    .hd-icon{display:inline-flex}
+    .hd-cta{display:none}
+  }
+  @media (max-width:560px){
+    :root{--hd-h:62px}
+    .hd-in{padding:0 16px}
+    .hd.is-scrolled .hd-in{height:56px}
+    footer .f-top{grid-template-columns:1fr;gap:28px}
+    h1{overflow-wrap:break-word;hyphens:auto}
+  }
+  @media (prefers-reduced-motion:reduce){.hd,.hd-in,.hd-panel,.hd-burger .bars,.hd-burger .bars::before,.hd-burger .bars::after,.hd-cta{transition:none}}
+</style>
+</head>
+<body>
+<header class="hd">
+  
+  <div class="hd-in">
+    <a class="hd-logo" href="#" aria-label="Accueil"><svg class="hd-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3" fill="none" stroke="#fff" stroke-width="2.4"/><rect x="10" y="17.5" width="4" height="1.8" rx=".9" fill="#F0453A"/></svg><span>Mobile City</span></a>
+    <nav class="hd-nav" aria-label="Navigation principale"><a href="#panne">Votre panne</a><a href="#reparations">Réparations</a><a href="#accessoires">Accessoires</a><a href="#venir">Nous trouver</a></nav>
+    <div class="hd-act">
+      <a class="hd-cta" href="#devis">Demander un devis</a>
+      <a class="hd-icon hd-call" href="tel:+3222030319" aria-label="Appeler le 02 203 03 19"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" fill="currentColor"/></svg></a>
+      <button class="hd-icon hd-burger" type="button" aria-expanded="false" aria-controls="hd-panel" aria-label="Ouvrir le menu"><span class="bars" aria-hidden="true"></span></button>
+    </div>
+  </div>
+  <div class="hd-panel" id="hd-panel">
+    <nav aria-label="Menu"><a href="#panne">Votre panne</a><a href="#reparations">Réparations</a><a href="#accessoires">Accessoires</a><a href="#venir">Nous trouver</a><a class="hd-pbtn" href="#devis">Demander un devis</a><a class="hd-pbtn" href="tel:+3222030319"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" fill="currentColor"/></svg>Appeler le 02 203 03 19</a></nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="panne">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>Écran cassé, batterie à plat ? On répare, en express.</h1>
+        <p class="lead">L'atelier de réparation de la chaussée d'Ixelles. Montrez-nous ce qui ne va pas sur le téléphone, on vous dit si on peut le réparer.</p>
+        <div class="stars"><b>4,9</b><span class="s" aria-hidden="true">★★★★★</span><span>523 avis Google</span></div>
+        <div class="actions">
+          <a class="btn btn-rouge" href="tel:+3222030319">Appeler l'atelier</a>
+          <a class="btn btn-blanc" href="#venir">Passer en boutique</a>
+        </div>
+      </div>
+
+      <div class="device">
+      <div class="phone">
+        <svg viewBox="0 0 300 560" role="group" aria-label="Choisissez la partie du téléphone qui pose problème">
+          <rect x="20" y="10" width="260" height="540" rx="44" fill="#121A33"/>
+          <rect x="34" y="24" width="232" height="512" rx="32" fill="#2F4FF0"/>
+          <!-- écran fissuré -->
+          <path d="M150 210 L118 160 M150 210 L196 176 M150 210 L134 268 M150 210 L210 236 M118 160 L96 150 M196 176 L224 150 M134 268 L110 300" stroke="rgba(255,255,255,.55)" stroke-width="2" fill="none"/>
+          <rect x="120" y="36" width="60" height="18" rx="9" fill="#121A33"/>
+          <!-- boutons latéraux -->
+          <rect x="12" y="140" width="8" height="46" rx="3" fill="#0B1024"/>
+          <rect x="12" y="196" width="8" height="46" rx="3" fill="#0B1024"/>
+          <rect x="280" y="170" width="8" height="70" rx="3" fill="#0B1024"/>
+          <!-- batterie dessinée à l'écran -->
+          <rect x="112" y="360" width="76" height="34" rx="6" fill="none" stroke="#fff" stroke-width="4"/>
+          <rect x="188" y="370" width="6" height="14" rx="2" fill="#fff"/>
+          <rect x="118" y="366" width="14" height="22" rx="2" fill="#F0453A"/>
+          <!-- connecteur -->
+          <rect x="128" y="540" width="44" height="8" rx="4" fill="#3A4260"/>
+
+          <g class="hot on" data-k="ecran" tabindex="0" role="button" aria-pressed="true" aria-label="Écran">
+            <circle class="pulse" cx="150" cy="210" r="22"/>
+            <circle class="ring" cx="150" cy="210" r="22"/><text x="150" y="217" text-anchor="middle">+</text>
+          </g>
+          <g class="hot" data-k="camera" tabindex="0" role="button" aria-pressed="false" aria-label="Caméra">
+            <circle class="ring" cx="150" cy="45" r="18"/><text x="150" y="52" text-anchor="middle">+</text>
+          </g>
+          <g class="hot" data-k="boutons" tabindex="0" role="button" aria-pressed="false" aria-label="Boutons">
+            <circle class="ring" cx="16" cy="190" r="18"/><text x="16" y="197" text-anchor="middle">+</text>
+          </g>
+          <g class="hot" data-k="batterie" tabindex="0" role="button" aria-pressed="false" aria-label="Batterie">
+            <circle class="ring" cx="150" cy="377" r="20"/><text x="150" y="384" text-anchor="middle">+</text>
+          </g>
+          <g class="hot" data-k="charge" tabindex="0" role="button" aria-pressed="false" aria-label="Connecteur de charge">
+            <circle class="ring" cx="150" cy="530" r="18"/><text x="150" y="537" text-anchor="middle">+</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="panel" aria-live="polite">
+        <small id="p-step">Touchez un point sur le téléphone</small>
+        <h3 id="p-title">Écran cassé</h3>
+        <p id="p-text">Vitre fissurée, tactile qui ne répond plus, taches ou lignes à l'écran.</p>
+        <ul id="p-list"><li>Remplacement de la vitre et de l'écran</li><li>Écran qui ne s'allume plus</li><li>Tactile qui ne répond plus</li></ul>
+        <a class="btn btn-rouge" href="#devis" id="p-devis">Demander un devis</a>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="repairs" id="reparations">
+    <div class="wrap">
+      <div class="r-head">
+        <h2>Ce qu'on répare à l'atelier</h2>
+        <p>Apportez votre téléphone en boutique : on regarde d'où vient la panne et on vous dit ce qu'il faut réparer.</p>
+      </div>
+      <div class="shots">
+        <figure class="ph"><img src="https://images.unsplash.com/photo-1550041473-d296a3a8a18a?auto=format&fit=crop&w=1300&q=70" alt="Un technicien répare un smartphone" loading="lazy" decoding="async"></figure>
+        <figure class="ph"><img src="https://images.unsplash.com/photo-1746005718004-1f992c399428?auto=format&fit=crop&w=900&q=70" alt="Un iPhone démonté et des outils de réparation sur un tapis" loading="lazy" decoding="async"></figure>
+      </div>
+      <div class="r-list">
+        <div class="r"><h3><i></i>Écrans</h3><p>Vitre cassée, écran noir, tactile capricieux.</p></div>
+        <div class="r"><h3><i></i>Batteries</h3><p>Le téléphone se décharge vite ou s'éteint tout seul.</p></div>
+        <div class="r"><h3><i></i>Caméras</h3><p>Photos floues, caméra noire, objectif fendu.</p></div>
+        <div class="r"><h3><i></i>Boutons</h3><p>Volume ou bouton d'allumage bloqué ou mou.</p></div>
+        <div class="r"><h3><i></i>Charge</h3><p>Le câble ne tient plus ou ne charge plus.</p></div>
+        <div class="r"><h3><i></i>Appareils photo</h3><p>On s'occupe aussi des appareils photo et de leurs piles.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="devis" id="devis">
+    <div class="wrap devis-grid">
+      <div class="devis-intro">
+        <h2>Demander un devis</h2>
+        <p>Décrivez votre téléphone et la panne. On vous répond avec un prix et un délai de réparation.</p>
+        <ol class="devis-steps">
+          <li><b>1</b><span>Vous remplissez le formulaire.</span></li>
+          <li><b>2</b><span>On vous envoie le prix et le délai.</span></li>
+          <li><b>3</b><span>Vous passez à l'atelier avec votre téléphone.</span></li>
+        </ol>
+      </div>
+      <form class="form" id="devis-form" novalidate>
+        <!-- Clé Web3Forms : à remplacer par celle reçue sur web3forms.com -->
+        <input type="hidden" name="access_key" value="VOTRE_CLE_WEB3FORMS">
+        <input type="hidden" name="subject" value="Nouvelle demande de devis, site Mobile City">
+        <input type="hidden" name="from_name" value="Site Mobile City">
+        <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
+
+        <div class="field"><label for="f-nom">Nom</label><input id="f-nom" name="name" type="text" autocomplete="name" required></div>
+        <div class="field"><label for="f-tel">Téléphone</label><input id="f-tel" name="phone" type="tel" autocomplete="tel" required></div>
+        <div class="field full"><label for="f-mail">Email</label><input id="f-mail" name="email" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="f-modele">Marque et modèle</label><input id="f-modele" name="modele" type="text" placeholder="Ex. : iPhone 13, Galaxy S22" required></div>
+        <div class="field"><label for="f-panne">Panne</label>
+          <select id="f-panne" name="panne" required>
+            <option value="Écran cassé">Écran cassé</option>
+            <option value="Caméra">Caméra</option>
+            <option value="Boutons">Boutons</option>
+            <option value="Batterie">Batterie</option>
+            <option value="Charge">Charge</option>
+            <option value="Autre">Autre</option>
+          </select>
+        </div>
+        <div class="field full"><label for="f-msg">Détails <span>(facultatif)</span></label><textarea id="f-msg" name="message" placeholder="Ce qui s'est passé, depuis quand…"></textarea></div>
+        <button type="submit">Envoyer ma demande</button>
+        <p class="form-msg" id="form-msg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <section class="accessoires" id="accessoires">
+    <div class="wrap acc-grid">
+      <div>
+        <h2>Coques, câbles et protections</h2>
+        <p>Un mur entier d'accessoires en boutique : coques, verres trempés, chargeurs, câbles et écouteurs.</p>
+      </div>
+      <div class="wall" aria-hidden="true">
+        <i class="case" style="background:#F0453A"></i><i class="case" style="background:#1D3BD6"></i><i class="case" style="background:#FFD34D"></i><i class="case" style="background:#121A33"></i><i class="case" style="background:#8FD3C1"></i><i class="case" style="background:#F6A6C1"></i>
+        <i class="case" style="background:#B9C3DD"></i><i class="case" style="background:#2F4FF0"></i><i class="case" style="background:#F59E42"></i><i class="case" style="background:#E6E9F2"></i><i class="case" style="background:#5B3FD6"></i><i class="case" style="background:#F0453A"></i>
+      </div>
+    </div>
+  </section>
+
+  <section class="visit" id="venir">
+    <div class="wrap">
+      <h2>Nous trouver</h2>
+      <div class="v-grid">
+        <div class="card card-a">
+          <div class="big">Chaussée d'Ixelles 102<br>1050 Ixelles</div>
+          <p>L'atelier avec la vitrine pleine d'accessoires, juste à côté de la porte bleue.</p>
+          <a class="btn btn-rouge" href="https://www.google.com/maps/search/?api=1&query=Mobile%20City%2C%20Chauss%C3%A9e%20d%27Ixelles%20102%2C%201050%20Ixelles" target="_blank" rel="noopener">Ouvrir l'itinéraire</a>
+        </div>
+        <div class="card card-b">
+          <div class="big">Jusqu'à 19h</div>
+          <p>Appelez avant de passer pour savoir si la pièce est en stock.</p>
+          <a class="btn btn-rouge" href="tel:+3222030319">Appeler le 02 203 03 19</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="f-top">
+      <div>
+        <a class="f-logo" href="#">Mobile City</a>
+        <p>Atelier de réparation de téléphones chaussée d'Ixelles. Réparation express, accessoires et protections.</p>
+      </div>
+      <div>
+        <h3>Adresse</h3>
+        <ul><li>Chaussée d'Ixelles 102</li><li>1050 Ixelles</li><li><a href="https://www.google.com/maps/search/?api=1&query=Mobile%20City%2C%20Chauss%C3%A9e%20d%27Ixelles%20102%2C%201050%20Ixelles" target="_blank" rel="noopener">Itinéraire</a></li></ul>
+      </div>
+      <div>
+        <h3>Horaires</h3>
+        <ul><li>Ouvert jusqu'à 19h</li></ul>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <ul><li><a href="tel:+3222030319">02 203 03 19</a></li><li><a href="#reparations">Réparations</a></li><li><a href="#accessoires">Accessoires</a></li></ul>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <span>© 2026 Mobile City</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const P = {
+    ecran:   ["Écran cassé", "Vitre fissurée, tactile qui ne répond plus, taches ou lignes à l'écran.", ["Remplacement de la vitre et de l'écran","Écran qui ne s'allume plus","Tactile qui ne répond plus"]],
+    camera:  ["Caméra", "Photos floues, caméra qui reste noire ou objectif fendu.", ["Caméra avant et arrière","Vitre de l'objectif","Flash"]],
+    boutons: ["Boutons", "Bouton d'allumage ou de volume bloqué, mou ou qui ne répond plus.", ["Bouton d'allumage","Boutons de volume","Bouton silencieux"]],
+    batterie:["Batterie", "Le téléphone se vide en quelques heures, chauffe ou s'éteint tout seul.", ["Remplacement de batterie","Batterie gonflée","Téléphone qui s'éteint"]],
+    charge:  ["Charge", "Le câble ne tient plus, la charge se coupe ou ne démarre pas.", ["Connecteur de charge","Nettoyage du port","Charge lente"]]
+  };
+  const hots = document.querySelectorAll('.hot');
+  function pick(g){
+    const d = P[g.dataset.k];
+    hots.forEach(h => { const on = h === g; h.classList.toggle('on', on); h.setAttribute('aria-pressed', on ? 'true':'false'); const p=h.querySelector('.pulse'); if(p) p.remove(); });
+    document.getElementById('p-title').textContent = d[0];
+    document.getElementById('p-text').textContent = d[1];
+    document.getElementById('p-list').innerHTML = d[2].map(x => '<li>'+x+'</li>').join('');
+    document.getElementById('p-step').textContent = 'Votre panne';
+  }
+  hots.forEach(g => {
+    g.addEventListener('click', () => pick(g));
+    g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(g); } });
+  });
+
+  // Le bouton « Demander un devis » préremplit la panne choisie
+  const panneSel = document.getElementById('f-panne');
+  document.getElementById('p-devis').addEventListener('click', () => {
+    const t = document.getElementById('p-title').textContent;
+    [...panneSel.options].forEach(o => { if (o.value === t) panneSel.value = t; });
+  });
+
+  // Envoi du formulaire vers Web3Forms
+  const form = document.getElementById('devis-form');
+  const msg = document.getElementById('form-msg');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    msg.className = 'form-msg';
+    if (!form.checkValidity()) {
+      const bad = form.querySelector(':invalid');
+      msg.textContent = 'Remplissez le champ « ' + bad.labels[0].childNodes[0].textContent.trim() + ' ».';
+      msg.classList.add('err'); bad.focus(); return;
+    }
+    if (form.access_key.value === 'VOTRE_CLE_WEB3FORMS') {
+      msg.textContent = 'Formulaire pas encore activé : ajoutez la clé Web3Forms.';
+      msg.classList.add('err'); return;
+    }
+    const btn = form.querySelector('button');
+    btn.disabled = true; btn.textContent = 'Envoi en cours…';
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+        body: JSON.stringify(Object.fromEntries(new FormData(form)))
+      });
+      const data = await res.json();
+      if (res.status === 200 && data.success !== false) {
+        msg.textContent = 'Demande envoyée. On vous répond rapidement avec un prix.';
+        msg.classList.add('ok'); form.reset();
+      } else {
+        msg.textContent = "La demande n'est pas partie. Réessayez ou appelez le 02 203 03 19.";
+        msg.classList.add('err');
+      }
+    } catch (err) {
+      msg.textContent = "Pas de connexion. Réessayez ou appelez le 02 203 03 19.";
+      msg.classList.add('err');
+    }
+    btn.disabled = false; btn.textContent = 'Envoyer ma demande';
+  });
+</script>
+
+<script>
+  // En-tête : ombre au défilement, onglet actif, menu téléphone
+  (function(){
+    var hd = document.querySelector('.hd'); if (!hd) return;
+    var onScroll = function(){ hd.classList.toggle('is-scrolled', window.scrollY > 8); };
+    onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+
+    var btn = hd.querySelector('.hd-burger'), panel = hd.querySelector('.hd-panel');
+    function setOpen(o){ panel.classList.toggle('is-open', o); btn.setAttribute('aria-expanded', o ? 'true' : 'false'); btn.setAttribute('aria-label', o ? 'Fermer le menu' : 'Ouvrir le menu'); }
+    btn.addEventListener('click', function(e){ e.stopPropagation(); setOpen(!panel.classList.contains('is-open')); });
+    panel.addEventListener('click', function(e){ if (e.target.closest('a')) setOpen(false); });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && panel.classList.contains('is-open')) { setOpen(false); btn.focus(); } });
+    document.addEventListener('click', function(e){ if (!hd.contains(e.target)) setOpen(false); });
+    window.addEventListener('resize', function(){ if (window.innerWidth > 960) setOpen(false); });
+
+    var links = [].slice.call(hd.querySelectorAll('.hd-nav a, .hd-panel a[href^="#"]'));
+    var ids = []; links.forEach(function(a){ var id = a.getAttribute('href').slice(1); if (id && ids.indexOf(id) < 0) ids.push(id); });
+    var secs = ids.map(function(id){ return document.getElementById(id); }).filter(Boolean);
+    if (!('IntersectionObserver' in window) || !secs.length) return;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (!en.isIntersecting) return;
+        links.forEach(function(a){ a.classList.toggle('is-active', a.getAttribute('href') === '#' + en.target.id); });
+      });
+    }, {rootMargin:'-40% 0px -55% 0px'});
+    secs.forEach(function(s){ io.observe(s); });
+  })();
+</script>
+</body>
+</html>
